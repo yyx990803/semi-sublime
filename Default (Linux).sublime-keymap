@@ -1,0 +1,7 @@
+[{
+  "keys": ["ctrl+shift+a"],
+  "command": "add_semicolons"
+}, {
+  "keys": ["ctrl+shift+r"],
+  "command": "remove_semicolons"
+}]

@@ -8,6 +8,7 @@ from os.path import dirname, realpath, join, splitext
 IS_OSX = platform.system() == 'Darwin'
 IS_WINDOWS = platform.system() == 'Windows'
 SETTINGS_FILE = 'semi.sublime-settings'
+PLUGIN_FOLDER = os.path.dirname(os.path.realpath(__file__))
 BIN_PATH = join(sublime.packages_path(), dirname(realpath(__file__)), 'semi.js')
 
 settings = sublime.load_settings(SETTINGS_FILE)
@@ -43,7 +44,7 @@ def get_cdir(view):
   else:
     return "/"
 
-class AddSemicolonCommand(sublime_plugin.TextCommand):
+class AddSemicolonsCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     region = sublime.Region(0, self.view.size())
     buffer = self.view.substr(region)
@@ -51,10 +52,23 @@ class AddSemicolonCommand(sublime_plugin.TextCommand):
     if formated:
       self.view.replace(edit, region, formated)
 
-class RemoveSemicolonCommand(sublime_plugin.TextCommand):
+class RemoveSemicolonsCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     region = sublime.Region(0, self.view.size())
     buffer = self.view.substr(region)
     formated = call_semi(self.view, get_buffer(self.view), "remove")
     if formated:
       self.view.replace(edit, region, formated)
+
+class SemiOpenSettingsCommand(sublime_plugin.TextCommand):
+  def run(self, edit):
+    self.view.window().open_file(PLUGIN_FOLDER + "/" + SETTINGS_FILE)
+
+class SemiOpenKeymapCommand(sublime_plugin.TextCommand):
+  def run(self, edit):
+    platform = {
+      "windows": "Windows",
+      "linux": "Linux",
+      "osx": "OSX"
+    }.get(sublime.platform())
+    self.view.window().open_file(PLUGIN_FOLDER + "/Default (" + platform + ").sublime-keymap")

@@ -1,0 +1,29 @@
+[{
+  "id": "tools",
+  "children": [{
+    "id": "semi_tools",
+    "caption": "Semi",
+    "children": [{
+      "caption": "Add Semicolons",
+      "command": "add_semicolons"
+    }, {
+      "caption": "Remove Semicolons",
+      "command": "remove_semicolons"
+    }]
+  }]
+}, {
+  "id": "preferences",
+  "children": [{
+    "id": "package-settings",
+    "children": [{
+      "caption": "Semi",
+      "children": [{
+        "caption": "Node Path",
+        "command": "semi_open_settings"
+      }, {
+        "caption": "Key Bindings",
+        "command": "semi_open_keymap"
+      }]
+    }]
+  }]
+}]
