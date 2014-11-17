@@ -28,7 +28,10 @@ def call_semi(view, data, cmd):
       stdout=PIPE, stdin=PIPE, stderr=PIPE,
       cwd=cdir, env=env, shell=IS_WINDOWS)
   except OSError:
-    raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
+    msg = 'Couldn\'t find Node.js. Make sure it\'s in your $PATH. Or, do you want to manually set the path to node?'
+    if sublime.ok_cancel_dialog(msg):
+      view.window().open_file(PLUGIN_FOLDER + "/" + SETTINGS_FILE)
+
   stdout, stderr = p.communicate(input=data.encode('utf-8'))
   stdout = stdout.decode('utf-8')
   stderr = stderr.decode('utf-8')
