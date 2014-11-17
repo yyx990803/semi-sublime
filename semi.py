@@ -70,7 +70,7 @@ class RemoveSemicolonsCommand(sublime_plugin.TextCommand):
       return
     region = sublime.Region(0, self.view.size())
     buffer = self.view.substr(region)
-    formated = call_semi(self.view, get_buffer(self.view), "remove")
+    formated = call_semi(self.view, buffer, "remove")
     if formated:
       self.view.replace(edit, region, formated)
 
