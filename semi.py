@@ -1,5 +1,4 @@
-import os
-import platform
+import os, platform, re
 import sublime
 import sublime_plugin
 from subprocess import Popen, PIPE
@@ -44,8 +43,18 @@ def get_cdir(view):
   else:
     return "/"
 
+def not_supported(view):
+  file_path = view.file_name()
+  view_settings = view.settings()
+  has_js_or_html_extension = file_path != None and bool(re.search(r'\.(jsm?|html?)$', file_path))
+  has_js_or_html_syntax = bool(re.search(r'JavaScript|HTML', view_settings.get("syntax"), re.I))
+  has_json_syntax = bool(re.search("JSON", view_settings.get("syntax"), re.I))
+  return has_json_syntax or (not has_js_or_html_extension and not has_js_or_html_syntax)
+
 class AddSemicolonsCommand(sublime_plugin.TextCommand):
   def run(self, edit):
+    if not_supported(self.view):
+      return
     region = sublime.Region(0, self.view.size())
     buffer = self.view.substr(region)
     formated = call_semi(self.view, buffer, "add")
@@ -54,6 +63,8 @@ class AddSemicolonsCommand(sublime_plugin.TextCommand):
 
 class RemoveSemicolonsCommand(sublime_plugin.TextCommand):
   def run(self, edit):
+    if not_supported(self.view):
+      return
     region = sublime.Region(0, self.view.size())
     buffer = self.view.substr(region)
     formated = call_semi(self.view, get_buffer(self.view), "remove")
