@@ -1,0 +1,4 @@
+[
+  {"caption": "Semi: Add Semicolons", "command": "add_semicolons"},
+  {"caption": "Semi: Remove Semicolons", "command": "remove_semicolons"}
+]
