@@ -8,8 +8,9 @@ var nativeMax = Math.max;
 
 /**
  * Creates an array of numbers (positive and/or negative) progressing from
- * `start` up to, but not including, `end`. If `start` is less than `end` a
- * zero-length range is created unless a negative `step` is specified.
+ * `start` up to, but not including, `end`. If `end` is not specified it is
+ * set to `start` with `start` then set to `0`. If `end` is less than `start`
+ * a zero-length range is created unless a negative `step` is specified.
  *
  * @static
  * @memberOf _
