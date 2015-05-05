@@ -15,11 +15,13 @@ process.stdin.on('data', function (buffer) {
 })
 
 process.stdin.on('end', function () {
-  process.stdout.write(semi[cmd](file))
+  process.stdout.write(semi[cmd](file, {
+    leading: leading
+  }))
 })
 
 function checkLeadingOption () {
   var settings = require('fs').readFileSync(__dirname + '/semi.sublime-settings')
   settings = JSON.parse(settings)
-  return settings.leading
+  return settings.leading_semicolon
 }
